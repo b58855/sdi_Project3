@@ -1,10 +1,44 @@
 //arrays
 var generals = ["Sampson", "Archibald", "Salvador"];
-var platoons = [];
-//numbers
-var selectedGeneral;
-//bools
-var mood;
+//objects
+var army = {
+	general: "", 
+	platoons: [], 
+	battleReady: true, 
+	armySize: 0,
+	setGeneral: function(string)
+	{
+		general = string;
+	},
+	getGeneral: function()
+	{
+		return general;
+	},
+	setPlatoons: function(array)
+	{
+		platoons = array;
+	},
+	getPlatoons: function()
+	{
+		return platoons;
+	},
+	setBattleReady: function(bool)
+	{
+		battleReady = bool;
+	},
+	getBattleReady: function()
+	{
+		return battleReady;
+	},
+	setArmySize: function(number)
+	{
+		armySize = number;
+	},
+	getArmySize: function()
+	{
+		return armySize;
+	}
+	};
 
 //writes to the console log
 var Write = function(string)
@@ -18,47 +52,18 @@ var Platoon = function()
 	var name;
 	var commander; 
 	var size; 
-
-	var setCommander = function(string)
-	{
-		commander = string;
-	};
-	var setName = function(string)
-	{
-		name = string;
-	};
-	var setSize = function(number)
-	{
-		size = number;
-	};
-	
-	var getCommander = function()
-	{
-		return commander;
-	};
-	var getName = function()
-	{
-		return name;
-	};
-	var getSize = function()
-	{
-		return size;
-	};
 	
 	return{
-		name: getName,
-		commander: getCommander,
-		size: getSize,
-		setCommander: setCommander,
-		setName: setName,
-		setSize: setSize
+		name: name,
+		commander: commander,
+		size: size,
 		}
 };
 
 //this function is used to select who the General will be from the array of generals
 var SelectGeneral = function()
 {
-	var random = Math.Floor(Math.random()) * 4;
+	var random = Math.floor(Math.random() * 3);
 	return random;
 };
 
@@ -99,9 +104,9 @@ var CreatePlatoons = function(number)
 	{
 		var aPlatoon = Platoon();
 
-		aPlatoon.setName(json.platoons[i].name);
-		aPlatoon.setCommander(json.platoons[i].commander);
-		aPlatoon.setSize(json.platoons[i].size);
+		aPlatoon.name = json.platoons[i].name;
+		aPlatoon.commander = json.platoons[i].commander;
+		aPlatoon.size = json.platoons[i].size;
 		
 		addedPlatoons.push(aPlatoon);
 	};
@@ -109,3 +114,40 @@ var CreatePlatoons = function(number)
 	return addedPlatoons;
 };
 
+var ArmyRollCall = function(array)
+{
+	var squads = 0;
+	var i = 0;
+	while (i < array.length)
+	{
+		for (var j = 0; j < array[i].size / 10; j++)
+		{
+			squads++;
+		}
+		i++;
+	}
+	return squads * 10;
+};
+
+var ReadyForBattle = function(object)
+{
+	if (object.getArmySize > 15000)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+};
+
+
+var CreateArmy = function()
+{
+	army.setGeneral(generals[SelectGeneral()]);
+	army.platoons = CreatePlatoons(json.platoons.length);
+	army.armySize = ArmyRollCall(army.platoons);
+	army.setBattleReady(ReadyForBattle(army));
+}
+
+CreateArmy();
