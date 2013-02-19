@@ -6,6 +6,50 @@ var selectedGeneral;
 //bools
 var mood;
 
+//Platoon Constructor
+var Platoon = function()
+{	
+	var name;
+	var commander; 
+	var size; 
+
+	var setCommander = function(string)
+	{
+		commander = string;
+	}
+	var setName = function(string)
+	{
+		name = string;
+	}
+	var setSize = function(number)
+	{
+		size = number;
+	}
+	
+	var getCommander = function()
+	{
+		return commander;
+	}
+	var getName = function()
+	{
+		return name;
+	}
+	var getSize = function()
+	{
+		return size;
+	}
+	
+	return
+	{
+		"name": getName,
+		"commander": getCommander,
+		"size": getSize,
+		"setCommander": setCommander,
+		"setName": setName,
+		"setSize": setSize
+	}
+};
+
 //writes to the console log
 var Write = function(string)
 {
@@ -50,22 +94,10 @@ var GeneralsMood = function(string, bool)
 //this creates an array of platoons then returns the array
 var CreatePlatoons = function(number)
 {
-	var leaders = [];
-	var addedPlatoons [];
-	
-	var setSize = function(number)
-	{
-	}
-	
-	var newPlatoon = function(number)
-	{
-		var platoonLeader = leaders[number];
-		var platoonSize = setSize(number);
-	}
-	
+	var addedPlatoons;	
 	for (var i = 0; i < number; i++)
 	{
-		addedPlatoons.push(newPlatoon(i));
+		addedPlatoons.push(Platoon());
 	}
 	
 	return addedPlatoons;
