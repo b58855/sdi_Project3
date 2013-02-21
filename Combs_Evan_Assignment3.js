@@ -70,29 +70,31 @@ var SelectGeneral = function()
 //this function uses who the general is and his mood to decide what the general should say
 var GeneralsMood = function(string, bool)
 {
+	var battleCry;
 	if (bool === true)
 	{
 		if (string === generals[0])
 		{
-			write();
+			battleCry = "Let's win the BATTLE!!!!!";
 		}
 		else if (string === generals[1])
 		{
-			write();
+			battleCry = 'We have the advantage.';
 		}
 		else if (string === generals[2])
 		{
-			write();
+			battleCry = 'Never give up. Never surrender!';
 		}
 		else
 		{
-			write();
+			battleCry = 'We have our war!';
 		};
 	}
 	else
 	{
-		write();
+		battleCry = 'Live long for today we do not die.';
 	};
+	return battleCry;
 };
 
 //this creates an array of platoons then returns the array
@@ -131,7 +133,7 @@ var ArmyRollCall = function(array)
 
 var ReadyForBattle = function(object)
 {
-	if (object.getArmySize > 15000)
+	if (object.armySize > 5000)
 	{
 		return true;
 	}
@@ -149,5 +151,14 @@ var CreateArmy = function()
 	army.armySize = ArmyRollCall(army.platoons);
 	army.setBattleReady(ReadyForBattle(army));
 }
-
 CreateArmy();
+
+
+//output
+Write('General ' + army.getGeneral() + ' walks up to the podium to talk to ' + army.armySize + ' soldiers.');
+Write('We have ' + army.platoons.length + ' platoons:');
+for (var i = 0; i < army.platoons.length; i++)
+{
+	Write('Platoon ' + army.platoons[i].name + ' with Commander ' + army.platoons[i].commander + ' has ' + army.platoons[i].size + ' soldiers.');
+};
+Write(GeneralsMood(army.getGeneral(), army.getBattleReady()));
